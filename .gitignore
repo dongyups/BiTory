@@ -1,3 +1,5 @@
+.gitignore
+
 # 폴더 제외
 .previous/
 __pycache__/
