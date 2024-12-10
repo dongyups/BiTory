@@ -1,0 +1,8 @@
+# 폴더 제외
+.previous/
+__pycache__/
+candidates/dongyup_shin/
+xtts/
+
+#파일 제외
+.env
