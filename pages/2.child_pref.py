@@ -48,7 +48,7 @@ if 'child_messages' not in st.session_state:
         '''
     })
     st.session_state.child_messages.append({
-        "role":"assistant","content":"안녕! 난 너의 다정한 친구야 나랑 같이 동화를 만들어보자!"
+        "role":"assistant","content":"안녕! 난 너의 다정한 친구야 나랑 같이 동화를 만들어보자! 준비됐니?"
     })
 
 # 채팅 영역에 메시지 표시
