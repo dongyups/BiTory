@@ -12,7 +12,8 @@ import numpy as np
 
 # xtts 인퍼런스
 def xttsmodel_inference(tts_input: str, target_lang: str):
-    prompt= re.sub("([^\x00-\x7F]|\w)(\.|\。|\?)",r"\1 \2\2", tts_input)
+    # OPTIONAL: 텍스트 클리어링
+    prompt= re.sub("([^\x00-\x7F]|\w)(\.|\。|\?)", r"\1\2", tts_input)
     tmp_input_path = st.session_state.pv_inputs + f"{target_lang}/"
     gpt_cond_latent, speaker_embedding = st.session_state.ttsmodel.get_conditioning_latents(
         gpt_cond_len=30, gpt_cond_chunk_len=4, max_ref_length=60,
