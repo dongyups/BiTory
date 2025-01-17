@@ -93,82 +93,236 @@ if button1:
     st.success('경로 생성됨')
 
 
-# Part2: 개별 목소리 업로드/변환 및 로컬 저장
-# 한국어
-with st.form("upload-then-clear-form-korean", clear_on_submit=True):
-        file_list  = st.file_uploader(
-            '한국어(Korean) 음성파일을 업로드 하세요. 여러 파일을 한번에 업로드 하셔도 됩니다.', 
-            type=['m4a','wav'], accept_multiple_files=True
-        )
-        button2 = st.form_submit_button("Convert")
-        if button2:
+# # Part2: 개별 목소리 업로드/변환 및 로컬 저장
+# # 한국어
+# with st.form("upload-then-clear-form-korean", clear_on_submit=True):
+#         file_list  = st.file_uploader(
+#             '한국어(Korean) 음성파일을 업로드 하세요. 여러 파일을 한번에 업로드 하셔도 됩니다.', 
+#             type=['m4a','wav'], accept_multiple_files=True
+#         )
+#         button2 = st.form_submit_button("Convert")
+#         if button2:
 
-            # 업로드 된 파일 로컬에 저장
-            for file in file_list:
-                with open(st.session_state.pv_inputs+"ko/" + file.name.lower(), 'wb') as f:
-                    f.write(file.getbuffer())
+#             # 업로드 된 파일 로컬에 저장
+#             for file in file_list:
+#                 with open(st.session_state.pv_inputs+"ko/" + file.name.lower(), 'wb') as f:
+#                     f.write(file.getbuffer())
 
-            # 확장자 변환 및 trim
-            for file in os.listdir(st.session_state.pv_inputs+"ko/"):
-                # m4a 파일의 경우
-                if len(file.split(".m4a")[0]) != len(file):
-                    tobesaved = st.session_state.pv_inputs+"ko/" + file.split(".m4a")[0]+".wav"
-                    audio = AudioSegment.from_file(st.session_state.pv_inputs+"ko/" + file, format="m4a")
-                    audio.export(tobesaved, format="wav")
-                    os.remove(st.session_state.pv_inputs+"ko/" + file) # m4a 파일 제거
-                    audio = AudioSegment.from_wav(tobesaved)
-                    audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
-                    audio.export(tobesaved, format="wav") # 덮어쓰기
+#             # 확장자 변환 및 trim
+#             for file in os.listdir(st.session_state.pv_inputs+"ko/"):
+#                 # m4a 파일의 경우
+#                 if len(file.split(".m4a")[0]) != len(file):
+#                     tobesaved = st.session_state.pv_inputs+"ko/" + file.split(".m4a")[0]+".wav"
+#                     audio = AudioSegment.from_file(st.session_state.pv_inputs+"ko/" + file, format="m4a")
+#                     audio.export(tobesaved, format="wav")
+#                     os.remove(st.session_state.pv_inputs+"ko/" + file) # m4a 파일 제거
+#                     audio = AudioSegment.from_wav(tobesaved)
+#                     audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
+#                     audio.export(tobesaved, format="wav") # 덮어쓰기
 
-                # wav 파일의 경우
-                else:
-                    tobesaved = st.session_state.pv_inputs+"ko/" + file
-                    audio = AudioSegment.from_wav(tobesaved)
-                    audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
-                    audio.export(tobesaved, format="wav") # 덮어쓰기
+#                 # wav 파일의 경우
+#                 else:
+#                     tobesaved = st.session_state.pv_inputs+"ko/" + file
+#                     audio = AudioSegment.from_wav(tobesaved)
+#                     audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
+#                     audio.export(tobesaved, format="wav") # 덮어쓰기
 
-            del file_list
-            st.success('변환 완료')
-# 제2언어
-with st.form("upload-then-clear-form-non-korean", clear_on_submit=True):
-        file_list  = st.file_uploader(
-            '선택하신 제2언어(non-Korean) 음성파일을 업로드 하세요. 여러 파일을 한번에 업로드 하셔도 됩니다.', 
-            type=['m4a','wav'], accept_multiple_files=True
-        )
-        button3 = st.form_submit_button("Convert")
-        if button3:
+#             del file_list
+#             st.success('변환 완료')
+# # 제2언어
+# with st.form("upload-then-clear-form-non-korean", clear_on_submit=True):
+#         file_list  = st.file_uploader(
+#             '선택하신 제2언어(non-Korean) 음성파일을 업로드 하세요. 여러 파일을 한번에 업로드 하셔도 됩니다.', 
+#             type=['m4a','wav'], accept_multiple_files=True
+#         )
+#         button3 = st.form_submit_button("Convert")
+#         if button3:
 
-            # 업로드 된 파일 로컬에 저장
-            for file in file_list:
-                with open(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file.name.lower(), 'wb') as f:
-                    f.write(file.getbuffer())
+#             # 업로드 된 파일 로컬에 저장
+#             for file in file_list:
+#                 with open(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file.name.lower(), 'wb') as f:
+#                     f.write(file.getbuffer())
 
-            # 확장자 변환 및 trim
-            for file in os.listdir(st.session_state.pv_inputs+f"{st.session_state.select_language}/"):
-                # m4a 파일의 경우
-                if len(file.split(".m4a")[0]) != len(file):
-                    tobesaved = st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file.split(".m4a")[0]+".wav"
-                    audio = AudioSegment.from_file(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file, format="m4a")
-                    audio.export(tobesaved, format="wav")
-                    os.remove(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file) # m4a 파일 제거
-                    audio = AudioSegment.from_wav(tobesaved)
-                    audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
-                    audio.export(tobesaved, format="wav") # 덮어쓰기
+#             # 확장자 변환 및 trim
+#             for file in os.listdir(st.session_state.pv_inputs+f"{st.session_state.select_language}/"):
+#                 # m4a 파일의 경우
+#                 if len(file.split(".m4a")[0]) != len(file):
+#                     tobesaved = st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file.split(".m4a")[0]+".wav"
+#                     audio = AudioSegment.from_file(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file, format="m4a")
+#                     audio.export(tobesaved, format="wav")
+#                     os.remove(st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file) # m4a 파일 제거
+#                     audio = AudioSegment.from_wav(tobesaved)
+#                     audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
+#                     audio.export(tobesaved, format="wav") # 덮어쓰기
 
-                # wav 파일의 경우
-                else:
-                    tobesaved = st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file
-                    audio = AudioSegment.from_wav(tobesaved)
-                    audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
-                    audio.export(tobesaved, format="wav") # 덮어쓰기
+#                 # wav 파일의 경우
+#                 else:
+#                     tobesaved = st.session_state.pv_inputs+f"{st.session_state.select_language}/" + file
+#                     audio = AudioSegment.from_wav(tobesaved)
+#                     audio = audio[:-200] # 윈도우 녹음기 사용시 마지막 노이즈 제거
+#                     audio.export(tobesaved, format="wav") # 덮어쓰기
 
-            del file_list
-            st.success('변환 완료')
+#             del file_list
+#             st.success('변환 완료')
+
+# Part2: 개별 목소리 10개씩 샘플 녹음
+st.markdown(f"----------------------")
+st.markdown(f"**목소리를 녹음하는 부분입니다. 버튼을 눌러 녹음하시면 됩니다. 다시 녹음을 원하시면 버튼을 눌러 재녹음 해주세요. 약 6초가량 녹음이 진행됩니다.**")
+
+st.markdown(f"한국어 예시")
+scripts_ko = utils.script_sample(lang="ko")
+
+st.markdown(f"{scripts_ko[0]}")
+ko1 = st.button("한국어 녹음1")
+if ko1:
+    desired_file_name="ko1.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[1]}")
+ko2 = st.button("한국어 녹음2")
+if ko2:
+    desired_file_name="ko2.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[2]}")
+ko3 = st.button("한국어 녹음3")
+if ko3:
+    desired_file_name="ko3.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[3]}")
+ko4 = st.button("한국어 녹음4")
+if ko4:
+    desired_file_name="ko4.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[4]}")
+ko5 = st.button("한국어 녹음5")
+if ko5:
+    desired_file_name="ko5.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[5]}")
+ko6 = st.button("한국어 녹음6")
+if ko6:
+    desired_file_name="ko6.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[6]}")
+ko7 = st.button("한국어 녹음7")
+if ko7:
+    desired_file_name="ko7.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[7]}")
+ko8 = st.button("한국어 녹음8")
+if ko8:
+    desired_file_name="ko8.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[8]}")
+ko9 = st.button("한국어 녹음9")
+if ko9:
+    desired_file_name="ko9.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_ko[9]}")
+ko10 = st.button("한국어 녹음10")
+if ko10:
+    desired_file_name="ko10.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
+
+
+
+st.markdown(f"-")
+st.markdown(f"제2외국어 예시")
+scripts_secondlang = utils.script_sample(lang=st.session_state.select_language)
+
+st.markdown(f"{scripts_secondlang[0]}")
+sl1 = st.button("제2외국어 녹음1")
+if sl1:
+    desired_file_name="sl1.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[1]}")
+sl2 = st.button("제2외국어 녹음2")
+if sl2:
+    desired_file_name="sl2.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[2]}")
+sl3 = st.button("제2외국어 녹음3")
+if sl3:
+    desired_file_name="sl3.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[3]}")
+sl4 = st.button("제2외국어 녹음4")
+if sl4:
+    desired_file_name="sl4.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[4]}")
+sl5 = st.button("제2외국어 녹음5")
+if sl5:
+    desired_file_name="sl5.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[5]}")
+sl6 = st.button("제2외국어 녹음6")
+if sl6:
+    desired_file_name="sl6.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[6]}")
+sl7 = st.button("제2외국어 녹음7")
+if sl7:
+    desired_file_name="sl7.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[7]}")
+sl8 = st.button("제2외국어 녹음8")
+if sl8:
+    desired_file_name="sl8.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[8]}")
+sl9 = st.button("제2외국어 녹음9")
+if sl9:
+    desired_file_name="sl9.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
+
+st.markdown(f"{scripts_secondlang[9]}")
+sl10 = st.button("제2외국어 녹음10")
+if sl10:
+    desired_file_name="sl10.wav"
+    audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
+    st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
 
 # Part3: 모델 인퍼런스
 # button4 = st.button("Next")
 # if button4:
+st.markdown(f"----------------------")
 supported_sample_texts = {
     "ar": "يتم إنشاء القصص الخيالية بهذا الصوت.",
     "pt": "Histórias são geradas com esta voz.",
