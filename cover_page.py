@@ -172,70 +172,70 @@ st.markdown(f"**목소리를 녹음하는 부분입니다. 버튼을 눌러 녹�
 st.markdown(f"한국어 예시")
 scripts_ko = utils.script_sample(lang="ko")
 
-st.markdown(f"{scripts_ko[0]}")
+st.markdown(f"**{scripts_ko[0]}**")
 ko1 = st.button("한국어 녹음1")
 if ko1:
     desired_file_name="ko1.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[1]}")
+st.markdown(f"**{scripts_ko[1]}**")
 ko2 = st.button("한국어 녹음2")
 if ko2:
     desired_file_name="ko2.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[2]}")
+st.markdown(f"**{scripts_ko[2]}**")
 ko3 = st.button("한국어 녹음3")
 if ko3:
     desired_file_name="ko3.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[3]}")
+st.markdown(f"**{scripts_ko[3]}**")
 ko4 = st.button("한국어 녹음4")
 if ko4:
     desired_file_name="ko4.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[4]}")
+st.markdown(f"**{scripts_ko[4]}**")
 ko5 = st.button("한국어 녹음5")
 if ko5:
     desired_file_name="ko5.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[5]}")
+st.markdown(f"**{scripts_ko[5]}**")
 ko6 = st.button("한국어 녹음6")
 if ko6:
     desired_file_name="ko6.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[6]}")
+st.markdown(f"**{scripts_ko[6]}**")
 ko7 = st.button("한국어 녹음7")
 if ko7:
     desired_file_name="ko7.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[7]}")
+st.markdown(f"**{scripts_ko[7]}**")
 ko8 = st.button("한국어 녹음8")
 if ko8:
     desired_file_name="ko8.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[8]}")
+st.markdown(f"**{scripts_ko[8]}**")
 ko9 = st.button("한국어 녹음9")
 if ko9:
     desired_file_name="ko9.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+"ko/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+"ko/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_ko[9]}")
+st.markdown(f"**{scripts_ko[9]}**")
 ko10 = st.button("한국어 녹음10")
 if ko10:
     desired_file_name="ko10.wav"
@@ -248,70 +248,70 @@ st.markdown(f"-")
 st.markdown(f"제2외국어 예시")
 scripts_secondlang = utils.script_sample(lang=st.session_state.select_language)
 
-st.markdown(f"{scripts_secondlang[0]}")
+st.markdown(f"**{scripts_secondlang[0]}**")
 sl1 = st.button("제2외국어 녹음1")
 if sl1:
     desired_file_name="sl1.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[1]}")
+st.markdown(f"**{scripts_secondlang[1]}**")
 sl2 = st.button("제2외국어 녹음2")
 if sl2:
     desired_file_name="sl2.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[2]}")
+st.markdown(f"**{scripts_secondlang[2]}**")
 sl3 = st.button("제2외국어 녹음3")
 if sl3:
     desired_file_name="sl3.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[3]}")
+st.markdown(f"**{scripts_secondlang[3]}**")
 sl4 = st.button("제2외국어 녹음4")
 if sl4:
     desired_file_name="sl4.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[4]}")
+st.markdown(f"**{scripts_secondlang[4]}**")
 sl5 = st.button("제2외국어 녹음5")
 if sl5:
     desired_file_name="sl5.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[5]}")
+st.markdown(f"**{scripts_secondlang[5]}**")
 sl6 = st.button("제2외국어 녹음6")
 if sl6:
     desired_file_name="sl6.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[6]}")
+st.markdown(f"**{scripts_secondlang[6]}**")
 sl7 = st.button("제2외국어 녹음7")
 if sl7:
     desired_file_name="sl7.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[7]}")
+st.markdown(f"**{scripts_secondlang[7]}**")
 sl8 = st.button("제2외국어 녹음8")
 if sl8:
     desired_file_name="sl8.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[8]}")
+st.markdown(f"**{scripts_secondlang[8]}**")
 sl9 = st.button("제2외국어 녹음9")
 if sl9:
     desired_file_name="sl9.wav"
     audio_file = utils.record_audio(duration=6.5, fs=44100, filename=st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name)
     st.audio(st.session_state.pv_inputs+f"{st.session_state.select_language}/"+desired_file_name, format="audio/wav")
 
-st.markdown(f"{scripts_secondlang[9]}")
+st.markdown(f"**{scripts_secondlang[9]}**")
 sl10 = st.button("제2외국어 녹음10")
 if sl10:
     desired_file_name="sl10.wav"
@@ -344,7 +344,7 @@ supported_sample_texts = {
 }
 
 output_name = "tmp_parent_voice"
-st.markdown(f"기본 텍스트가 주어집니다. 원하시는 텍스트로 수정하셔도 됩니다.")
+st.markdown(f"**아래 버튼을 눌러 생성된 목소리를 확인해 보세요.**")
 tts_input_firstlang = st.text_area(
     "TTS로 변환할 한국어(ko) 샘플 텍스트를 입력하세요.", height=1, 
     value=supported_sample_texts["ko"]
