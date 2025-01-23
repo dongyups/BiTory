@@ -28,7 +28,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "system", "content": 
         '''
-        너는 다문화가정 아동들의 부모와 대화하는 챗봇이야. 순서대로 5가지 질문을 하나씩 해줘. 부모가 답변하면 그 다음에 질문을 해.
+        너는 다문화가정 아동들의 부모와 대화하는 챗봇이야. 순서대로 5가지 질문을 하나씩 해줘. 부모가 답변하면 그 다음에 한국어로 질문을 해.
 
         1. 부모의 출신국가 
         2. 아동 나이
