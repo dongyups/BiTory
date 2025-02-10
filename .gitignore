@@ -4,12 +4,11 @@
 .previous/
 __pycache__/
 candidates/dongyup_shin/
-candidates/dongyup_shinn/
 candidates/gwanhyeong_lee/
 candidates/jungeun_park/
-candidates/soeun_gwon/
-
+candidates/soeun_kwon/
 xtts/
 
 #파일 제외
 .env
+4.interaction.py

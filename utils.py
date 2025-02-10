@@ -21,6 +21,7 @@ def xttsmodel_inference(tts_input: str, target_lang: str):
             tmp_input_path + x for x in os.listdir(tmp_input_path)
         ]
     )
+    target_lang = "zh-cn" if target_lang == "cn" else target_lang
     out = st.session_state.ttsmodel.inference(
         prompt,
         target_lang,
@@ -34,7 +35,7 @@ def xttsmodel_inference(tts_input: str, target_lang: str):
 # xtts 결과 display 및 저장
 def generate_audio(text_chunk: str, target_lang: str):
     # 몇페이지의 음성인지 파악가능
-    whatpage, tts_input = text_chunk.split(":")
+    whatpage, tts_input = text_chunk.split(":", 1)
     aud_dest = st.session_state.pv_outputs + f"voices/{st.session_state.session_id}/"
     os.makedirs(aud_dest, exist_ok=True) # 디렉토리가 없으면 생성
     file_path_name = os.path.join(aud_dest, f"{whatpage}.wav") #최종 파일 경로
@@ -73,7 +74,7 @@ def convert_lang_code_for_google_vr(lang_code):
         return "ar-SA"
     elif lang_code == "pt":
         return "pt-PT"
-    elif lang_code == "zh-cn":
+    elif lang_code == "cn": # zh-cn: Mandarin
         return "cmn-Hans-CN"
     elif lang_code == "cs":
         return "cs-CZ"
@@ -232,7 +233,7 @@ def script_sample(lang):
 'No último dia do verão, o sol se despediu com um brilho dourado. (희망) 여름의 마지막 날, 태양이 황금빛으로 작별을 고했다.',
         ]
 
-    elif lang=="zh-cn":
+    elif lang=="cn": # zh-cn
         script = [
             '“哎呀，小兔子！雨滴答滴答地下来了！” (놀람) "어머, 토끼야! 비가 똑똑 떨어지잖아!"',
             '“这只风筝能飞到月亮吗？” (기대) "이 연이 달까지 날아갈 수 있을까?"',

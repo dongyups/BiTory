@@ -54,7 +54,7 @@ supported_languages = [
     "  : -- Select Your Language -- :  ",
     "Arabic(아랍어) : ar", 
     "Brazilian Portuguese(포르투갈어) : pt", 
-    "Chinese Mandarin(중국어) : zh-cn", 
+    "Chinese Mandarin(중국어) : cn", # zh-cn
     "Czech(체코어) : cs", 
     "Dutch(네덜란드어) : nl", 
     "English(영어) : en", 
@@ -333,7 +333,7 @@ st.markdown(f"----------------------")
 supported_sample_texts = {
     "ar": "يتم إنشاء القصص الخيالية بهذا الصوت.",
     "pt": "Histórias são geradas com esta voz.",
-    "zh-cn": "通过这个声音生成童话故事。",
+    "cn": "通过这个声音生成童话故事。",
     "cs": "Pohádky jsou vytvořeny tímto hlasem.",
     "nl": "Sprookjes worden gegenereerd met deze stem.",
     "en": "Fairy tales are generated with this voice.",
