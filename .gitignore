@@ -1,14 +1,11 @@
-.gitignore
-
 # 폴더 제외
-.previous/
 __pycache__/
+.previous/
 candidates/dongyup_shin/
+candidates/soeun_kwon/
 candidates/gwanhyeong_lee/
 candidates/jungeun_park/
-candidates/soeun_kwon/
 xtts/
 
-#파일 제외
+# 파일 제외
 .env
-4.interaction.py

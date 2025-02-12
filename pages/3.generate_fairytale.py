@@ -1,5 +1,5 @@
 import streamlit as st
-import openai, os, json, random, re, uuid
+import openai, os, json, random
 from dotenv import load_dotenv
 import utils
 
@@ -20,8 +20,6 @@ with open(tmp_parent_prefer, "r", encoding='utf-8') as tmppp:
     st.session_state.parent_prefer = json.load(tmppp)
 with open(tmp_child_prefer, "r", encoding='utf-8') as tmpcp:
     st.session_state.child_prefer = json.load(tmpcp)
-print("부모 선호도 결과:", st.session_state.parent_prefer)
-print("아동 선호도 결과:", st.session_state.child_prefer)
 
 
 ### 동화 작성 부분 ###
@@ -33,8 +31,8 @@ if 'first_tale' not in st.session_state:
             messages=[
                 {"role": "system", "content": "당신은 다문화 가정 아동들의 이중 언어 발달을 돕기 위한 동화책 작가입니다."},
                 {"role":"user","content": f'''
-                다음 요소들을 기억해: 부모의 선호 요소: {st.session_state.parent_prefer}, 아동의 선호 요소: {st.session_state.child_prefer}
-            
+                다음 요소들을 기억해: 부모의 선호 요소는 {st.session_state.parent_prefer} & 아동의 선호 요소는 {st.session_state.child_prefer}
+
                 그리고 다음 8가지 조건으로 동화를 구성해줘 
                 1. 아동의 선호 요소를 넣어줘 
                 2. ‘표현’ 을 학습할 수 있게 동화 안에 넣어줘 
@@ -119,9 +117,9 @@ if 'final_tale' not in st.session_state:
         # final_tale에 gpt 응답 저장
         utils.save_gpt_response(gpt_response,st.session_state.final_tale)
 
-    # ### OPTIONAL: zh-cn 한어병음 ###
+    # ### OPTIONAL: cn(zh-cn) 한어병음 ###
     # # 언어가 중국어일 때 한어 병음 추가
-    # if st.session_state.select_language == 'zh-cn':
+    # if st.session_state.select_language == 'cn':
     #     st.session_state['messages_2'] = []
 
     #     # 중국어 내용만 추출
@@ -260,224 +258,97 @@ if 'prompt4' not in st.session_state:
         prompt4 = llm_7.choices[0].message.content.strip().split("\n\n")
         st.session_state.prompt4=prompt4
 
-# 이미지 번호와 내용 분리
-for p in st.session_state.prompt4:
-    if not p.strip():
-        continue
+    # 이미지 번호와 내용 분리
+    for p in st.session_state.prompt4:
+        if not p.strip():
+            continue
 
-    if p.startswith("페이지"):
-        sections = p.split(":", 1)  # 첫 번째 : 까지만
-        if len(sections) > 1:
-            try:
-                p_num = int(sections[0].replace("페이지", "").strip())  # 페이지 번호 추출
-                st.session_state.img_num.append(p_num)
-            except ValueError:
-                print(f"Warning: Unable to parse page number in line: {p.strip()}")
+        if p.startswith("페이지"):
+            sections = p.split(":", 1)  # 첫 번째 : 까지만
+            if len(sections) > 1:
+                try:
+                    p_num = int(sections[0].replace("페이지", "").strip())  # 페이지 번호 추출
+                    st.session_state.img_num.append(p_num)
+                except ValueError:
+                    print(f"Warning: Unable to parse page number in line: {p.strip()}")
+            else:
+                print(f"Warning: Unexpected format in line: {p.strip()}")
         else:
-            print(f"Warning: Unexpected format in line: {p.strip()}")
-    else:
-        print(f"Warning: Line does not start with '페이지': {p.strip()}")
+            print(f"Warning: Line does not start with '페이지': {p.strip()}")
 
-#출력물 확인
-print(st.session_state.img_num)  # img_num 출력
-print(st.session_state.prompt4)
-print(st.session_state.final_tale)
+    #출력물 확인
+    print(st.session_state.img_num)  # img_num 출력
+    print(st.session_state.prompt4)
+    print(st.session_state.final_tale)
 
 
 # 이미지 프롬프트 정화
-ref_prompt = utils.sanitize_prompt(st.session_state.prompt4)
-st.session_state.ref_prompt = ref_prompt
+if 'ref_prompt' not in st.session_state:
+    ref_prompt = utils.sanitize_prompt(st.session_state.prompt4)
+    st.session_state.ref_prompt = ref_prompt
 
 
 #이미지와 넘버 매치
-urls_list = utils.generate_image(st.session_state.ref_prompt,client=client,setting=st.session_state.image_style)
-num_list = st.session_state.img_num
-st.session_state.dict_imgs = dict(zip(num_list, urls_list))
+if 'dict_imgs' not in st.session_state:
+    urls_list = utils.generate_image(st.session_state.ref_prompt,client=client,setting=st.session_state.image_style)
+    num_list = st.session_state.img_num
+    st.session_state.dict_imgs = dict(zip(num_list, urls_list))
 
 
 ### 동화 최종 생성 부분 ###
-# 최종 동화 출력
-if st.session_state.final_tale:
-    for message in st.session_state.final_tale:
-        if message["role"] == "assistant":
-            with st.chat_message(message["role"]):
-
-                # 텍스트 출력
-                st.write(message["content"])
-                
-                # 음성 출력
-                # 페이지가 홀수일때(한국어 일때)의 오디오
-                if int(message["content"].split(":")[0].split()[1]) % 2 == 1:
-                    utils.generate_audio(message["content"], target_lang="ko")
-                # 페이지가 짝수일때(제2언어 일때)의 오디오
-                if int(message["content"].split(":")[0].split()[1]) % 2 == 0:
-                    utils.generate_audio(message["content"], target_lang=st.session_state.select_language)
-
-                # 이미지 생성
-                if any(int(message["content"].split(":")[0].split()[1]) == int(i) for i in list(st.session_state.dict_imgs.keys())):
-                    with st.spinner("그림이 나오고 있어요"):
-
-                        # 이미지 출력
-                        page_number = int(message["content"].split(":")[0].split()[1])
-
-                        # 매칭되는 페이지 번호에 해당하는 이미지 출력
-                        if page_number in st.session_state.dict_imgs:
-                            st.image(st.session_state.dict_imgs[page_number], use_column_width=True)
-                            
-    # ### OPTIONAL: zh-cn 한어병음 ###
-    # # 한어 병음 출력
-    # if "messages_2" in st.session_state:
-    #     for message in st.session_state.messages_2:
-    #         if message["role"] == "assistant":
-    #             with st.chat_message(message["role"]):
-    #                 st.write(message["content"])
-
-
-    # 모든 프롬프트 저장
-    filename = st.session_state.pv_outputs + st.session_state.session_id+"_all_prompt.json"
-    with open(filename, 'w', encoding='utf-8') as f:
-        # 모든 데이터를 합친 후 덤프
-        all_messages = []
-        all_messages.extend([utils.chat_message_to_dict(message) for message in st.session_state["final_tale"]])
-
-        # ### OPTIONAL: zh-cn 한어병음 ###
-        # # 한어병음이 있으면 한어병음 추가
-        # if "messages_2" in st.session_state:
-        #     all_messages.extend([utils.chat_message_to_dict(message) for message in st.session_state["messages_2"]])
-
-        json.dump(all_messages, f, ensure_ascii=False, indent=4)
-
-    st.success("생성 완료")
-    st.write("동화 생성이 완료되었습니다. 상호작용을 시작합니다.")
-
-
-### 마지막 상호작용 부분 ###
-# 생성된 동화 trim
-trimmed_generated_korean_fairytale = []
-for idx in range(len(all_messages)):
-    if idx % 2 == 0: # 홀수 페이지
-        trimmed_generated_korean_fairytale.append(all_messages[idx]['content'])
-trimmed_generated_korean_fairytale = ' '.join(trimmed_generated_korean_fairytale)
-
-# 컨테이너를 사용하여 채팅 영역과 입력 영역을 분리
-chat_container = st.container()
-input_container = st.container()
-
-# 세션 상태 변수 초기화
-if 'interaction_for_child_parent' not in st.session_state:
-    st.session_state.interaction_messages = []
-    st.session_state.interaction_messages.append({"role" : "system", "content" : 
-        f'''
-        너는 부모가 아이들에게 이야기를 읽어주며 한국어와 제 2언어인 {st.session_state.select_lang_name}의 언어 이해 능력을 키우고, 부모와의 상호작용을 돕는 챗봇이야. 
-
-        지시 사항:
-        1. 질문은 1개만 출력해.
-        2. 아이가 스토리와 가족 간의 경험, 자신의 경험, 감정을 연결하도록 유도해.
-        3. 아이가 답변하면, 바로 아이가 받은 첫 번째 질문을 자연스럽게 제 2언어로 말하도록 유도해.
-        4. 아이의 답변이 유도하기에 충분하지 않다면 다시 질문해.
-        5. 아이가 질문을 직접 제 2언어로 말하도록 유도하되, 절대 질문을 제 2언어로 번역해서 제공하면 안돼.
-
-        다음 진행 예시를 참고해서 진행해:
-        <진행 예시1>
-        - 부모의 선호 요소: 미국, 유아, 한국어, 영어, 날씨에 대한 표현, 풋볼
-        - 아이의 선호 요소: 아이스크림, 강아지, 보라색, 블록쌓기, 루피
-        - GPT의 질문: 퍼플이 블럭으로 풋볼 경기장을 만들었어! 너는 블럭이나 장난감으로 뭘 만들어 본 적이 있어? 😊
-        - 아이의 예상 답변: 나는 블록으로 경찰차를 만들었어.
-        - GPT의 답변: 와! 경찰차를 만들었다니 멋지다! 🚔 이번에는 내가 한 말을 영어로 엄마에게 말해볼까? 엄마랑 같이 말해봐도 좋아! 😊
-        <진행 예시2>
-        - 부모의 선호 요소: 중국, 유아, 한국어, 중국어, 감정 표현, 중추절
-        - 아이의 선호 요소: 아이스크림, 고양이, 하늘색, 게임, 또봇
-        - GPT의 질문: 재미있는 이야기였어! 민지가 솜이와 함께 중추절을 즐기는 모습이 정말 따뜻했어. 😊 너는 가족과 함께 특별한 날을 어떻게 보내니?
-        - 아이의 예상 답변: 함께 맛있는 음식을 먹어.
-        - GPT의 답변: 정말 좋겠다! 가족과 함께 먹는 음식은 더 맛있지. 😊 이제 내가 한 질문을 중국어로 엄마에게 물어봐!
-
-        다음의 요소들과 생성된 동화 이야기를 참고해서 위 예시와 유사하게 진행해:
-        - 부모의 선호 요소: {st.session_state.parent_prefer}
-        - 아이의 선호 요소: {st.session_state.child_prefer}
-        - 생성된 동화 이야기: {trimmed_generated_korean_fairytale}
-        '''
-    })
-    st.session_state.interaction_messages.append({
-        "role":"assistant", "content":"생성된 동화는 어떠셨나요? 아이에게 한가지 질문을 해도 괜찮을까요?"
-    })
-
-# 채팅 영역에 메시지 표시
-with chat_container:
-    # 스크롤 가능한 영역 생성
-    with st.container():
-        for message in st.session_state.interaction_messages:
-            if message["role"] != "system":
+if 'initiate_final_tale_generation' not in st.session_state:
+    # 최종 동화 출력
+    if st.session_state.final_tale:
+        for message in st.session_state.final_tale:
+            if message["role"] == "assistant":
                 with st.chat_message(message["role"]):
+
+                    # 텍스트 출력
                     st.write(message["content"])
+                    
+                    # 음성 출력
+                    # 페이지가 홀수일때(한국어 일때)의 오디오
+                    if int(message["content"].split(":")[0].split()[1]) % 2 == 1:
+                        utils.generate_audio(message["content"], target_lang="ko")
+                    # 페이지가 짝수일때(제2언어 일때)의 오디오
+                    if int(message["content"].split(":")[0].split()[1]) % 2 == 0:
+                        utils.generate_audio(message["content"], target_lang=st.session_state.select_language)
 
-# 입력 영역을 화면 하단에 고정
-with input_container:
-    # CSS로 입력창을 하단에 고정
-    st.markdown(
-        """
-        <style>
-        .stTextInput {
-            position: fixed;
-            bottom: 3rem;
-            width: calc(100% - 15rem);
-        }
-        .stSpinner {
-            position: fixed;
-            bottom: 7rem;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+                    # 이미지 생성
+                    if any(int(message["content"].split(":")[0].split()[1]) == int(i) for i in list(st.session_state.dict_imgs.keys())):
+                        with st.spinner("그림이 나오고 있어요"):
 
-    button_child = st.button("녹음 시작!")
+                            # 이미지 출력
+                            page_number = int(message["content"].split(":")[0].split()[1])
 
-    # 음성 녹음
-    if button_child:
-        audio_file = utils.record_audio(duration=10, fs=44100, filename=st.session_state.pv_outputs+"tmp_child_voice.wav")
-        if audio_file:
-            ### 한국어가 아닌 다른언어를 선택하여 진행하는것도 가능합니다 ###
-            ### 그러기 위해선 프롬프트를 수정할 필요가 있습니다 ###
-            user_audio = utils.recognize_speech(audio_file, target_lang="ko")
-            if user_audio is not None:
-                st.session_state.child_input = user_audio
-                print(f"음성 입력 받음: {st.session_state.child_input}")
-            else:
-                st.session_state.show_text = True
-        else:
-            st.write("음성을 녹음하지 못했어요...")
-            st.session_state.show_text = True
+                            # 매칭되는 페이지 번호에 해당하는 이미지 출력
+                            if page_number in st.session_state.dict_imgs:
+                                st.image(st.session_state.dict_imgs[page_number], use_column_width=True)
+                                
+        # ### OPTIONAL: cn(zh-cn) 한어병음 ###
+        # # 한어 병음 출력
+        # if "messages_2" in st.session_state:
+        #     for message in st.session_state.messages_2:
+        #         if message["role"] == "assistant":
+        #             with st.chat_message(message["role"]):
+        #                 st.write(message["content"])
 
-    # 텍스트 입력 처리
-    if st.session_state.show_text:
-        text_input = st.text_input("음성 인식에 실패했습니다. 텍스트로 입력해주세요:", key="text_input")
-        if text_input:  # 텍스트가 입력되었을 때만
-            st.session_state.child_input = text_input
-            print(f"텍스트 입력 받음: {st.session_state.child_input}")
-            st.session_state.show_text = False
-            st.rerun()  # 화면 갱신
 
-    if st.session_state.child_input is not None:
-        # 메시지 저장 및 응답 생성
-        st.session_state.interaction_messages.append({"role": "user", "content": st.session_state.child_input})
-        with chat_container:
-            with st.chat_message("user"):
-                st.write(st.session_state.child_input)
-        st.session_state.child_input=None
+        # 모든 프롬프트 저장
+        filename = st.session_state.pv_outputs + st.session_state.session_id+"_all_prompt.json"
+        with open(filename, 'w', encoding='utf-8') as f:
+            # 모든 데이터를 합친 후 덤프
+            all_messages = []
+            all_messages.extend([utils.chat_message_to_dict(message) for message in st.session_state["final_tale"]])
 
-        with chat_container:
-            with st.chat_message("assistant"):
-                with st.spinner("생각 중..."):
-                    llm = openai.chat.completions.create(
-                        model="gpt-4",
-                        messages=st.session_state.interaction_messages
-                    )
-                    gpt_response = "\n".join(llm.choices[0].message.content.strip().split('\n'))
-                    # 응답 저장
-                    st.session_state.interaction_messages.append({"role": "assistant", "content": gpt_response})
-                    st.write(gpt_response)
+            # ### OPTIONAL: cn(zh-cn) 한어병음 ###
+            # # 한어병음이 있으면 한어병음 추가
+            # if "messages_2" in st.session_state:
+            #     all_messages.extend([utils.chat_message_to_dict(message) for message in st.session_state["messages_2"]])
 
-# # QNA json?
-# filename_l = st.session_state.session_id + "_interaction_qna.json"
-# with open(st.session_state.pv_outputs + filename_l, 'w', encoding='utf-8') as f:
-#     json.dump(interaction_response, f, ensure_ascii=False, indent=4)
+            json.dump(all_messages, f, ensure_ascii=False, indent=4)
+
+        st.success("생성 완료")
+        st.session_state.initiate_final_tale_generation = True
+        st.write("상호작용을 시작합니다. 다음 페이지에서도 동화를 계속 보실 수 있습니다. 다음 버튼을 눌러주세요.")
+        st.page_link("pages/4.interaction.py", label="상호작용", icon="4️⃣")

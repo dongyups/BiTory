@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import utils
 
 # Streamlit 앱 제목
-st.title("안녕 친구 🎈")
+st.title("안녕 친구야 🎈")
 
 # 컨테이너를 사용하여 채팅 영역과 입력 영역을 분리
 chat_container = st.container()
@@ -41,7 +41,7 @@ if 'child_messages' not in st.session_state:
         2. 이때 아동의 답변에서 핵심 키워드를 찾아줘.
         3. 총 다섯 가지 질문을 하되, 여러 질문을 한 번에 하지 마. 
         4. 아동이 답변하면 그 다음에 질문을 해. 마지막 답변을 듣고 나서 ‘너가 좋아하는 것들로 동화를 만들어 줄게’ 라는 식으로 말하되, 질문형으로 끝내지 마. 
-        답변이 모두 끝나면 다음과 같은 형식으로 예시처럼 정리해줘.
+        답변이 모두 끝나면 아래의 형식을 참고해서 예시와 같이 정리해줘.
 
         형식: {답변1의 키워드, 답변2의 키워드, 답변3의 키워드, 답변4의 키워드, 답변5의 키워드}
         예시: {젤리, 고양이, 하늘색, 숨바꼭질, 루피}
@@ -143,4 +143,4 @@ if st.session_state.child_prefer is not None:
         json.dump(st.session_state.child_prefer, f, ensure_ascii=False, indent=4)
     # 다음 페이지로
     st.write("모든 질문이 완료되었습니다. 결과를 정리합니다. 다음 버튼을 눌러주세요.")
-    st.page_link("pages/3.generate_fairytale.py", label="완성!", icon="3️⃣")
+    st.page_link("pages/3.generate_fairytale.py", label="동화 생성", icon="3️⃣")
