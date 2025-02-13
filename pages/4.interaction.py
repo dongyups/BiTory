@@ -37,16 +37,20 @@ generated_korean_fairytale = ' '.join(generated_korean_fairytale)
 
 
 ### 마지막 상호작용 부분 ###
+st.markdown(f"----------------------")
+st.write("동화 생성이 완료되었습니다. 상호작용을 시작합니다.")
 st.text("")
 st.text("")
-st.write('''동화 생성이 완료되었습니다. 
-         상호작용을 시작합니다. 버튼을 누르시면 **10초**동안 녹음됩니다. 
-         다시 시작을 원하시면 아래의 **재시작** 버튼을 눌러 주세요.''')
-restart_interact = st.button("재시작")
-if restart_interact:
-    st.session_state.pop("interaction_messages")
+st.write("질문 생성을 하시려면 **질문 보기** 버튼을, 다시 시작을 원하시면 **재시작** 버튼을 눌러 주세요.")
+st.write("**녹음시작** 버튼을 누르시면 **10초**동안 녹음됩니다. ")
+
+create_question, restart_interact = st.columns([1,4.5])
 st.text("")
-st.text("")
+with restart_interact:
+    restart_interact = st.button("재시작")
+    if restart_interact:
+        st.session_state.pop("interaction_messages")
+
 
 # 변수 재사용, 컨테이너를 사용하여 채팅 영역과 입력 영역을 분리
 chat_container = st.container()
@@ -87,6 +91,23 @@ if 'interaction_messages' not in st.session_state:
     st.session_state.interaction_messages.append({
         "role":"assistant", "content":"생성된 동화는 어떠셨나요? 아이에게 한가지 질문을 해도 괜찮을까요?"
     })
+
+### 질문 생성, 부모 답변 이후 ###
+with create_question:
+    create_question = st.button("질문 보기")
+    if create_question:
+        st.session_state.interaction_messages.append({
+            "role":"user", "content":"네" # 네 좋습니다 / 네 괜찮습니다
+        })
+        with st.spinner("질문 생성 중..."):
+            llm = openai.chat.completions.create(
+                model="gpt-4",
+                messages=st.session_state.interaction_messages
+            )
+            gpt_response = "\n".join(llm.choices[0].message.content.strip().split('\n'))
+            # 응답 저장
+            st.session_state.interaction_messages.append({"role": "assistant", "content": gpt_response})
+
 
 # 채팅 영역에 메시지 표시
 with chat_container:
