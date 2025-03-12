@@ -125,25 +125,30 @@ def recognize_speech(audio_file, target_lang: str):
 
 
 # 이미지 생성 함수
-def generate_image(word,client,setting):
-    #이미지 url 저장
-    image_urls = []
+def generate_image(word,client,setting,model):
+    #이미지 url -> file name 저장으로 변경
+    image_fp = []
 
     #프롬프트 설정
     for pt in word:
         prom_word = pt + "in style of" + setting
 
         #이미지 생성 요청
+        if model == "dall-e-2":
+            size = "512x512"
+        elif model == "dall-e-3":
+            size = "1024x1024"
+        else:
+            raise ValueError("Check image generation model name. dalle2 or 3")
         response = client.images.generate(
-            model = "dall-e-3",
+            model = model,
             prompt = prom_word,
-            n=1,
-            size="1024x1024"
+            size = size,
+            n = 1,
         )
 
         #생성된 이미지의 url 출력
         image_url = response.data[0].url
-        image_urls.append(image_url)
 
         #세션 ID별 디렉토리 생성
         img_dest = st.session_state.pv_outputs + f"images/{st.session_state.session_id}/" #세션 ID 기반 저장 경로
@@ -155,8 +160,9 @@ def generate_image(word,client,setting):
 
         #이미지 다운로드 및 저장
         urllib.request.urlretrieve(image_url, file_path)
+        image_fp.append(file_path)
 
-    return image_urls
+    return image_fp
 
 
 # 이미지 프롬프트 정화

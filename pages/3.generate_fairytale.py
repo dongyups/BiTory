@@ -2,6 +2,7 @@ import streamlit as st
 import openai, os, json, random
 from dotenv import load_dotenv
 import utils
+from PIL import Image
 
 st.title("동화생성 🎈")
 
@@ -33,27 +34,27 @@ if 'first_tale' not in st.session_state:
                 {"role":"user","content": f'''
                 다음 요소들을 기억해: 부모의 선호 요소는 {st.session_state.parent_prefer} & 아동의 선호 요소는 {st.session_state.child_prefer}
 
-                그리고 다음 8가지 조건으로 동화를 구성해줘 
-                1. 아동의 선호 요소를 넣어줘 
-                2. ‘표현’ 을 학습할 수 있게 동화 안에 넣어줘 
-                3. 부모의 ‘출신 국가’ 를 동화의 사건, 배경, 등장인물 등에 적용해줘 
-                4. ‘문화’ 에 대한 설명을 자연스럽게 넣어줘 
-                5. 주어진 요소들을 이름으로 사용하지 마 
+                그리고 다음 8가지 조건으로 동화를 구성해.
+                1. 아동의 선호 요소를 넣어
+                2. ‘표현’ 을 학습할 수 있게 동화 안에 넣어
+                3. 부모의 ‘출신 국가’ 를 동화의 사건, 배경, 등장인물 등에 적용해
+                4. ‘문화’ 에 대한 설명을 자연스럽게 넣어
+                5. 주어진 요소들을 이름으로 사용하면 안돼
                 6. 등장인물들은 모두 이름을 가지고 있어야 해 
-                7. 만일 아동 나이가 ‘영아’이면, 0~3세 아동이 이해하기 쉬운 표현으로 의성어와 의태어를 추가해줘 
-                8. 만일 아동 나이가 ‘유아’이면, 4~7세 아동의 표현력이 향상할 수 있도록 동화를 만들어줘. 
+                7. 만일 아동 나이가 ‘영아’이면, 0~3세 아동이 이해하기 쉬운 표현으로 의성어와 의태어를 추가해
+                8. 만일 아동 나이가 ‘유아’이면, 4~7세 아동의 표현력이 향상할 수 있도록 동화를 만들어
             
-                동화의 분량은 다음 조건을 지켜줘. 
-                1. 만일 아동 나이가 ‘영아’이면, 총 12페이지, 각 페이지 당 글자 수는 10자 이상 40자 이하로 만들어줘. 
-                2. 만일 아동 나이가 ‘유아’이면, 총 12페이지, 각 페이지 당 글자 수 20자 이상 80자 이하로 만들어줘.
-                위의 조건들을 모두 포함하여 한국어로 동화를 써줘. 그리고 모든 내용은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성되게 만들어줘.
+                동화의 분량은 다음 조건을 지켜서 생성해.
+                1. 만일 아동 나이가 ‘영아’이면, 총 6페이지, 각 페이지 당 글자 수는 10자 이상 50자 이하로 만들어
+                2. 만일 아동 나이가 ‘유아’이면, 총 6페이지, 각 페이지 당 글자 수 30자 이상 70자 이하로 만들어
+                위의 조건들을 모두 포함하여 한국어로 동화를 생성해. 그리고 모든 내용은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성되게 만들어.
                 
                 만약 부모의 선호 요소가 캐나다, 유아, 한국어, 영어, 날씨에 대한 표현, 아이스 하키 이고, 
-                아동의 선호 요소가 젤리, 고양이, 하늘색, 숨바꼭질, 루피 라고 한다면 동화는 다음 예시처럼 출력해줘.
-                예시:
-                페이지 1: 아침이 밝았어요. 오늘은 파란 하늘이 펼쳐진 맑은 날이에요. 루피는 창밖을 보며 기분이 좋아졌어요. 
-                페이지 2: "오늘은 젤리와 숨바꼭질을 해야지!" 루피는 좋아하는 고양이 인형, 젤리를 꼭 안고 이야기했어요. 
-                페이지 3: 루피는 젤리를 데리고 집 앞 공원으로 나갔어요. 공원에는 사람들이 아이스 하키를 즐기고 있었어요. "와, 아이스 하키야!" 루피는 눈이 반짝였어요. 
+                아동의 선호 요소가 젤리, 고양이, 하늘색, 숨바꼭질, 루피 라고 한다면 다음 <예시>처럼 동화를 생성해.
+                <예시>
+                페이지 1: 아침이 밝았어요. 오늘은 파란 하늘이 펼쳐진 맑은 날이에요. 루피는 창밖을 보며 기분이 좋아졌어요.
+                페이지 2: "오늘은 젤리와 숨바꼭질을 해야지!" 루피는 좋아하는 고양이 인형, 젤리를 꼭 안고 이야기했어요.
+                페이지 3: 루피는 젤리를 데리고 집 앞 공원으로 나갔어요. 공원에는 사람들이 아이스 하키를 즐기고 있었어요. "와, 아이스 하키야!" 루피는 눈이 반짝였어요.
                 ...
                 '''
                 }
@@ -89,7 +90,7 @@ if 'final_tale' not in st.session_state:
                 - '자녀에게 알려주고 싶은 문화적 요소'에 대한 설명을 강화하여 강조해주세요.
                 - 모든 요소들을 자연스럽게 포함시켜 동화를 진행해주세요.
             
-                3. 길이: 총 24페이지 (한국어 12페이지, 제 2언어 12페이지)
+                3. 길이: 총 12페이지 (한국어 6페이지, 제 2언어 6페이지)
             
                 4. 주의사항:
                 - 설명 없이 이야기만 출력해주세요.
@@ -290,7 +291,12 @@ if 'ref_prompt' not in st.session_state:
 
 #이미지와 넘버 매치
 if 'dict_imgs' not in st.session_state:
-    urls_list = utils.generate_image(st.session_state.ref_prompt,client=client,setting=st.session_state.image_style)
+    urls_list = utils.generate_image(
+        word = st.session_state.ref_prompt,
+        client = client,
+        setting = st.session_state.image_style,
+        model = "dall-e-3"
+    )
     num_list = st.session_state.img_num
     st.session_state.dict_imgs = dict(zip(num_list, urls_list))
 
@@ -323,7 +329,9 @@ if 'initiate_final_tale_generation' not in st.session_state:
 
                             # 매칭되는 페이지 번호에 해당하는 이미지 출력
                             if page_number in st.session_state.dict_imgs:
-                                st.image(st.session_state.dict_imgs[page_number], use_column_width=True)
+                                resized_image = Image.open(st.session_state.dict_imgs[page_number])
+                                resized_image = resized_image.resize((512, 512))
+                                st.image(resized_image)
                                 
         # ### OPTIONAL: cn(zh-cn) 한어병음 ###
         # # 한어 병음 출력
