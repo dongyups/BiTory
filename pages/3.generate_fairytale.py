@@ -151,7 +151,7 @@ if "image_style" not in st.session_state:
         "kids illustration, oil pastel in a dreamy color pallete",
         "kids illustration, colored pencil in a cute and adorable style",
         "adorable storybook illustration with large pastel, a color pencil sketch inspired by Edwin Landseer",
-        "a storybook illustration by Marten Post",
+        "a storybook illustration by Aesop's Fables",
         "a storybook illustration by Walt Disney, Disney Studio presents",
         "cute and simple cartoon style, in a dreamy color palette",
     ]
