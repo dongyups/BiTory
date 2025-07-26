@@ -1,28 +1,35 @@
 ## BiTory
 
-All procedures are run on the Streamlit web browser interface. You may need a microphone for voice cloning and vocal interaction with the system.
+All processes run on the Streamlit web browser interface. 
+A microphone may be required for voice cloning and vocal interaction with the system.
 
 ### Before you start
-According to gitignore, you may see ".env" file is intentionally omitted.
-You have to fill the file with your own OPENAI_API_KEY from your OPENAI account in order to use GPT-4 and DALL-E 3 models which are essential for the system.
+As specified in `.gitignore`, the `.env` file is intentionally excluded from the repository.
 
-You also have to prepare CoquiAI's "xtts_v2.0.2" model.
-Since the file size is too big to upload, you have to install the model on your local computer and move the files into this directory. We store the model in the "xtts" folder in this parent directory. You may find the following component files of xtts: config.json, hash.md5, model.pth, speakers_xtts.pth, tos_agreed.txt, vocab.json
+You need to create this file and add your own `OPENAI_API_KEY` from your OpenAI account to use the GPT-4 and DALL·E 3 models, which are essential for this system.
+
+You will also need CoquiAI's `xtts_v2.0.2` model.
+Since the model file is too large to upload to the repository, you must download and install it locally, then move the files to this directory.
+We store the model files in a folder named `xtts` located in the parent directory of the project.
+The folder should contain the following files:
+`config.json`, `hash.md5`, `model.pth`, `speakers_xtts.pth`, `tos_agreed.txt`, and `vocab.json`.
+
 
 ```python
-# download xtts_v2.0.2 (not v2.0.3 if you mainly utilize the model for non-English speech) and figure out the default directory where the model is installed
-# IMPORTANT: the default directory can be a hidden folder e.g.) C:\Users\USER_NANE\AppData\... for Windows OS
+# Download xtts_v2.0.2 (use this version instead of v2.0.3 if your main use case involves non-English speech)
+# Identify the default directory where the model is installed
+# IMPORTANT: The default directory may be a hidden folder (e.g., C:\Users\YOUR_NAME\AppData\... on Windows OS)
 from TTS.api import TTS
 TTS("xtts_v2.0.2", gpu=False)
 
-# move it from the default download folder to your working directory
+# Move the downloaded files from the default directory to your working directory
 !mv [DEFAULT_DIR]/tts_models--multilingual--multi-dataset--xtts_v2.0.2/* [YOUR_WORKING_DIR]/tts/
 ```
 
 ### Run
-After successfully preparing "xtts" and ".env", run as below.
-Run ```streamlit run cover_page.py -- ```
+After setting up the `xtts` folder and `.env` file, you can start the application by running:
+```streamlit run cover_page.py -- ```
 
-Argparse options.
-- using gpu: --use_gpu
-- upload your own prepared voices: --uv
+### Argparse options
+- Use GPU: `--use_gpu`
+- Upload your own pre-recorded voices: `--uv`
