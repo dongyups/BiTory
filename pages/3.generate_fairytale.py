@@ -34,7 +34,7 @@ if 'first_tale' not in st.session_state:
                 {"role":"user","content": f'''
                 다음 요소들을 기억해: 부모의 선호 요소는 {st.session_state.parent_prefer} & 아동의 선호 요소는 {st.session_state.child_prefer}
 
-                그리고 다음 8가지 조건으로 동화를 구성해.
+                그리고 다음 7가지 조건으로 동화를 구성해.
                 1. 아동의 선호 요소를 넣어
                 2. ‘표현’ 을 학습할 수 있게 동화 안에 넣어
                 3. 부모의 ‘출신 국가’ 를 동화의 사건, 배경, 등장인물 등에 적용해
@@ -200,7 +200,7 @@ if 'prompt2' not in st.session_state:
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성하세요.
 
                 형식:
-                페이지 1: (Subject) Loopy the toddler(age: 3), (Appearance) Small size,  round face, big round eyes, (Hair) soft curls in light brown (clothes) Bright pastel blue shirt
+                페이지 1: (Subject) Loopy the child, (Appearance) Small size,  round face, big round eyes, (Hair) Soft curls in light brown (Clothes) Bright pastel blue shirt
                 '''
                 }
             ]
@@ -224,7 +224,7 @@ if 'prompt3' not in st.session_state:
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성하세요.
 
                 형식:
-                페이지 1: (Feeling) Happy (Action) watching the flowers, (Background) old tree (adjective) luscious (Environment) in the forest
+                페이지 1: (Feeling) happy (Action) Watching the flowers, (Background) Old tree (Adjective) Luscious (Environment) In the forest
                 '''
                 }
             ]
@@ -247,9 +247,8 @@ if 'prompt4' not in st.session_state:
                 스토리의 각 페이지마다 캐릭터 외형과 배경을 형식처럼 합쳐주세요.
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성되게 만드세요.
                 형식:
-                페이지 1: (Subject) Loopy the toddler(age: 3), (Appearance) Small size, round face, big round eyes, (Hair) soft curls in light brown (cloth) Bright pastel blue shirt, (Feeling) Happy (Action) watching the flowers, (Background) old tree (adjective) luscious (Environment) in the forest,
-                페이지 3: (Subject) Crong the playful bunny (age: 2), (Appearance) Fluffy ears, small button nose, big smile, (Color) soft cream white, (cloth) Green bow tie, (Feeling) Curious, (Action) holding a strawberry, (Background) grassy hill (adjective) gentle slope (Environment) in a sunny meadow
-
+                페이지 1: (Subject) Loopy the child, (Appearance) Small size, round face, big round eyes, (Hair) Soft curls in light brown (Clothes) Bright pastel blue shirt, (Feeling) Happy (Action) Watching the flowers, (Background) Old tree, (Adjective) Luscious, (Environment) In the forest,
+                페이지 3: (Subject) Crong the playful bunny, (Appearance) Fluffy ears, small button nose, big smile, (Color) Soft cream white, (Clothes) Green bow tie, (Feeling) Curious, (Action) Holding a strawberry, (Background) Grassy hill, (Adjective) Gentle slope, (Environment) In a sunny meadow
                 '''
                 }
             ]
