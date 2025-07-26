@@ -5,7 +5,6 @@ A microphone may be required for voice cloning and vocal interaction with the sy
 
 ### Before you start
 As specified in `.gitignore`, the `.env` file is intentionally excluded from the repository.
-
 You need to create this file and add your own `OPENAI_API_KEY` from your OpenAI account to use the GPT-4 and DALL·E 3 models, which are essential for this system.
 
 You will also need CoquiAI's `xtts_v2.0.2` model.
@@ -27,7 +26,7 @@ TTS("xtts_v2.0.2", gpu=False)
 ```
 
 ### Run
-After setting up the `xtts` folder and `.env` file, you can start the application by running:
+After setting up the `xtts` folder and `.env` file, you can start the application by running:\
 ```streamlit run cover_page.py -- ```
 
 ### Argparse options
