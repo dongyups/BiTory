@@ -152,7 +152,7 @@ if "image_style" not in st.session_state:
         "kids illustration, colored pencil in a cute and adorable style",
         "adorable storybook illustration with large pastel, a color pencil sketch inspired by Edwin Landseer",
         "a storybook illustration by Aesop's Fables",
-        "a storybook illustration by Walt Disney, Disney Studio presents",
+        "a storybook-style illustration for children",
         "cute and simple cartoon style, in a dreamy color palette",
     ]
     st.session_state.image_style = str(random.choice(style))
@@ -176,7 +176,7 @@ if 'prompt1' not in st.session_state:
                 페이지 1: 파란 하늘이 맑게 펼쳐진 아침이에요. 오늘은 날씨가 좋아서 루피가 기분이 좋아졌어요.,
                 페이지 3: "오늘은 숨바꼭질을 해야겠다!" 고양이 인형을 꼭 안고 있는 루피는 놀이를 하고 싶다고 이야기했어요.,
                 페이지 5: 루피는 젤리와 함께 집 앞 공원으로 나갔어요. 공원에는 아이들이 놀고 있었어요.",
-                페이지 6: 공원의 한쪽에서는 피자를 먹고 있는 가족들이 있었어요. "피자 냄새가 좋아!" 루피는 냄새를 맡으며 말했어요
+                페이지 9: 공원의 한쪽에서는 피자를 먹고 있는 가족들이 있었어요. "피자 냄새가 좋아!" 루피는 냄새를 맡으며 말했어요
                 '''
                 }
             ]
@@ -194,7 +194,7 @@ if 'prompt2' not in st.session_state:
                 {"role": "system", "content": "당신은 다문화 가정 아동들의 이중 언어 발달을 돕기 위한 동화책 작가입니다."},
                 {"role": "user", "content": f'''
                 스토리: {st.session_state.prompt1}
-                주어진 스토리에서 모든 캐릭터를 추출하고  캐릭터가 무엇인지 영어로 출력하세요.
+                주어진 스토리에서 모든 캐릭터를 추출하고 캐릭터가 무엇인지 영어로 출력하세요.
                 만일 Sam 이라는 다람쥐 캐릭터라면 ‘Sam the squirrel’ 로 출력하세요. 그리고 캐릭터의 생김새를 출력하세요.
                 만일 캐릭터가 사람이라면 캐릭터의 나이, 이목구비, 헤어, 의상을 형식처럼 출력하세요.
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성하세요.

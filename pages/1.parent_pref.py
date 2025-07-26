@@ -13,6 +13,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Streamlit 앱 제목
 st.title("다문화가정 아동 부모 상담 챗봇")
 
+# 시작하기전 가이드라인
+st.write("아래 채팅에서 **'자녀가 배웠으면 하는 언어 표현'** 은 다음 예시와 같이 작성해 주시면 됩니다." \
+         "  \n \a 날씨에 대한 표현 \a 음식에 대한 표현 \a 사랑에 대한 표현 등과 같이 원하시는 **'###에 대한 표현'** 으로 작성해 주세요.")
+
 # 컨테이너를 사용하여 채팅 영역과 입력 영역을 분리
 chat_container = st.container()
 input_container = st.container()
@@ -28,7 +32,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
     st.session_state.messages.append({"role": "system", "content": 
         '''
-        너는 다문화가정 아동들의 부모와 대화하는 챗봇이야. 순서대로 5가지 질문을 하나씩 해. 부모가 답변하면 그 다음에 한국어로 질문을 해.
+        너는 다문화가정 아동들의 부모와 대화하는 챗봇이야. 순서대로 4가지 질문을 하나씩 해. 부모가 답변하면 그 다음에 한국어로 질문을 해.
 
         1. 부모의 출신국가
         2. 자녀가 한국어와 다른 제 2언어 중 어느 것을 더 어려워하는지

@@ -63,16 +63,6 @@ input_container = st.container()
 if 'interaction_messages' not in st.session_state:
     st.session_state.interaction_messages = []
     st.session_state.interaction_messages.append({"role" : "system", "content" : 
-        # 아이가 생성된 동화와 가족 간의 경험, 자신의 경험, 감정을 연결하도록 유도해야해.
-        # 아이에게 질문을 하고 아이의 답변을 기반으로 호응한 뒤에 제 2언어로도 말할 수 있도록 자연스럽게 유도해.
-        # 호응한 뒤에 절대로 의문형 문장으로 끝내면 안돼. 
-        # 부모의 선호 요소는 미국, 유아, 한국어, 영어, 날씨에 대한 표현, 풋볼 이고 아이의 선호 요소는 아이스크림, 강아지, 보라색, 블록쌓기, 루피 일때 아래와 같이 진행해.
-        # 부모의 선호 요소는 중국, 유아, 한국어, 중국어, 감정 표현, 중추절 이고 아이의 선호 요소: 아이스크림, 고양이, 하늘색, 게임, 또봇 일때 아래와 같이 진행해.
-        # - 부모의 선호 요소: {st.session_state.parent_prefer}
-        # - 아동의 선호 요소: {st.session_state.child_prefer}
-        # 이번에는 내가 한 말을 영어로 엄마에게 말해볼까? 엄마랑 같이 말해봐도 좋아! 😊
-        # 😊 이제 내가 한 질문을 중국어로 엄마에게 물어봐!
-        # 비슷한 말과 반대말을 한국어와 {st.session_state.select_lang_name}로 엄마에게 말해볼까? 잘 모르겠으면 엄마랑 같이 말해봐도 좋아! 😊
         f'''
         너는 아동의 한국어와 제 2언어인 {st.session_state.select_lang_name}의 언어능력을 증진시키기 위한 GPT야.
         잊지마 너는 반드시 생성된 <동화 이야기>를 참고해서 진행해야해.
@@ -82,6 +72,7 @@ if 'interaction_messages' not in st.session_state:
         GPT의 질문은 반드시 동화 이야기를 참고해서 진행해. GPT의 질문의 수준은 아동의 눈높이에 맞는 수준으로 질문해.
         그리고 아동의 눈높이에 맞는 동사나 형용사 단어를 동화 이야기에서 하나 선택해. 선택한 단어의 유의어나 반의어를 가지고 호응할거야.
         다음의 <예시> 두가지를 참고해서 친근하게 진행해.
+
         <예시1>
         1. GPT의 시작: 생성된 동화는 어떠셨나요? 아이에게 한가지 질문을 해도 괜찮을까요?
         2. 부모의 답변: 네 괜찮습니다
@@ -154,7 +145,7 @@ with input_container:
         audio_file = utils.record_audio(duration=10, fs=44100, filename=st.session_state.pv_outputs+"tmp_child_voice.wav")
         if audio_file:
             ### 한국어가 아닌 다른언어를 선택하여 진행하는것도 가능합니다 ###
-            ### 그러기 위해선 프롬프트를 수정할 필요가 있습니다 ###
+            ### 그러기 위해선 프롬프트와 아래 target_lang을 수정해야 합니다 ###
             user_audio = utils.recognize_speech(audio_file, target_lang="ko")
             if user_audio is not None:
                 st.session_state.child_input = user_audio
