@@ -43,8 +43,7 @@ if 'first_tale' not in st.session_state:
                 6. 등장인물들은 모두 이름을 가지고 있어야 해
                 7. 아동의 표현력이 향상할 수 있도록 동화를 만들어
             
-                동화의 분량은 다음 조건을 지켜서 생성해:
-                총 6페이지, 각 페이지 당 글자 수 30자 이상 70자 이하로 만들어.
+                동화의 분량은 다음 조건을 지켜서 생성해: 총 6페이지, 각 페이지 당 글자 수 30자 이상 70자 이하로 만들어.
                 위의 조건들을 모두 포함하여 한국어로 동화를 생성해. 그리고 모든 내용은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성되게 만들어.
                 
                 만약 부모의 선호 요소가 캐나다, 한국어, 영어, 날씨에 대한 표현, 아이스 하키 이고, 
@@ -200,7 +199,7 @@ if 'prompt2' not in st.session_state:
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성하세요.
 
                 형식:
-                페이지 1: (Subject) Loopy the child, (Appearance) Small size,  round face, big round eyes, (Hair) Soft curls in light brown (Clothes) Bright pastel blue shirt
+                페이지 1: (Subject) Loopy the child, (Appearance) Small size, round face, big round eyes, (Hair) Soft curls in light brown, (Clothes) Bright pastel blue shirt
                 '''
                 }
             ]
@@ -224,7 +223,7 @@ if 'prompt3' not in st.session_state:
                 그리고 모든 설명은 OpenAI의 콘텐츠 안전 정책에 위반하지 않는 단어들로만 구성하세요.
 
                 형식:
-                페이지 1: (Feeling) happy (Action) Watching the flowers, (Background) Old tree (Adjective) Luscious (Environment) In the forest
+                페이지 1: (Feeling) Happy, (Action) Watching the flowers, (Background) Old tree, (Adjective) Luscious, (Environment) In the forest
                 '''
                 }
             ]
