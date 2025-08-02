@@ -147,7 +147,7 @@ if 'final_tale' not in st.session_state:
 if "image_style" not in st.session_state:
     style = [
         "Sebastian, children's book illustrator, Whimsical and colorful style, Medium: Watercolor, Color Scheme: Bright and lively color palette",
-        "kids illustration, oil pastel in a dreamy color pallete",
+        "kids illustration, oil pastel in a dreamy color palette",
         "kids illustration, colored pencil in a cute and adorable style",
         "adorable storybook illustration with large pastel, a color pencil sketch inspired by Edwin Landseer",
         "a storybook illustration by Aesop's Fables",
