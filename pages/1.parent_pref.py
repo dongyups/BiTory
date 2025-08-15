@@ -1,10 +1,12 @@
 import streamlit as st
 # 페이지 설정은 반드시 다른 Streamlit 명령어보다 먼저 실행되어야 함
 st.set_page_config(layout="wide")
-import warnings, os, re, uuid, openai, json
+import warnings, os, re, uuid, openai, json, utils
 from dotenv import load_dotenv
 warnings.simplefilter(action='ignore')
 
+# 커스텀 사이드바
+utils.custom_sidebar()
 
 # api키 설정
 load_dotenv(verbose=True)

@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 import utils
 from PIL import Image
 
+# 커스텀 사이드바
+utils.custom_sidebar()
+
 st.title("상호작용 🎈")
 
 # OpenAI API 키 설정

@@ -25,6 +25,8 @@ torch.backends.cudnn.benchmark = False
 np.random.seed(arg.seed_num)
 random.seed(arg.seed_num)
 
+# 커스텀 사이드바
+utils.custom_sidebar()
 
 # TTS 모델 캐싱
 @st.cache_resource(show_spinner=True)

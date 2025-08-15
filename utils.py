@@ -9,6 +9,14 @@ import os
 import re
 import numpy as np
 
+# 사이드바 이름 --client.showSidebarNavigation=False
+def custom_sidebar():
+    st.sidebar.page_link("cover_page.py", label="🎤 Record")
+    st.sidebar.page_link("pages/1.parent_pref.py", label="🛎️ Parents")
+    st.sidebar.page_link("pages/2.child_pref.py", label="🎯 Children")
+    st.sidebar.page_link("pages/3.generate_fairytale.py", label="📖 Fairytale")
+    st.sidebar.page_link("pages/4.interaction.py", label="💡 Interaction")
+    st.sidebar.markdown("---")
 
 # xtts 인퍼런스
 def xttsmodel_inference(tts_input: str, target_lang: str):
@@ -291,8 +299,8 @@ def script_sample(lang):
             'The treasure chest sparkled under the moonlight. (설렘) 보물 상자가 달빛 아래에서 반짝였어요.',
             'Crash! The blocks tumbled down. (놀람) 쾅! 블록들이 무너져 내렸어요.',
             'The diary was dated December 12th. (호기심) 그 일기는 12월 12일로 적혀 있었어요.',
-            'The raindrops pattered softly, like tears on the window. (슬픔) 빗방울이 창문에 눈물처럼 부드럽게 톡톡 떨어졌어요. ',
-            '"Crunch, crunch went the autumn leaves beneath her boots." (평온) 바스락바스락, 그녀의 부츠 아래에서 가을 잎사귀가 소리 냈어요. ',
+            'The raindrops pattered softly, like tears on the window. (슬픔) 빗방울이 창문에 눈물처럼 부드럽게 톡톡 떨어졌어요.',
+            '"Crunch, crunch went the autumn leaves beneath her boots." (평온) 바스락바스락, 그녀의 부츠 아래에서 가을 잎사귀가 소리 냈어요.',
         ]
 
     elif lang=="fr":

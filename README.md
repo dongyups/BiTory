@@ -27,7 +27,7 @@ TTS("xtts_v2.0.2", gpu=False)
 
 ### Run
 After setting up the `xtts` folder and `.env` file, you can start the application by running:\
-```streamlit run cover_page.py -- ```
+```streamlit run cover_page.py --client.showSidebarNavigation=False -- ```
 
 ### Argparse options
 - Use GPU: `--use_gpu`

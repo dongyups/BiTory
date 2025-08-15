@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import utils
 from PIL import Image
 
+# 커스텀 사이드바
+utils.custom_sidebar()
+
 st.title("동화생성 🎈")
 
 # api키 설정

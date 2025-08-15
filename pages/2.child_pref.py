@@ -6,6 +6,9 @@ import os, re, openai, json
 from dotenv import load_dotenv
 import utils
 
+# 커스텀 사이드바
+utils.custom_sidebar()
+
 # Streamlit 앱 제목
 st.title("안녕 친구야 🎈")
 
